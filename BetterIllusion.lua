@@ -13,6 +13,50 @@ better_illusion = SMODS.current_mod
 
 sendDebugMessage("Better Illusion Voucher patch activated!")
 
+--- Add extra_cost values to enhancements
+SMODS.Enhancement:take_ownership('m_bonus', { extra_cost = 0 })
+SMODS.Enhancement:take_ownership('m_mult', { extra_cost = 0 })
+SMODS.Enhancement:take_ownership('m_wild', { extra_cost = 0 })
+SMODS.Enhancement:take_ownership('m_stone', { extra_cost = 0 })
+SMODS.Enhancement:take_ownership('m_glass', { extra_cost = 2 })
+SMODS.Enhancement:take_ownership('m_steel', { extra_cost = 2 })
+SMODS.Enhancement:take_ownership('m_gold', { extra_cost = 2 })
+SMODS.Enhancement:take_ownership('m_lucky', { extra_cost = 2 })
+
+--- Add extra_cost values to seals
+SMODS.Seal:take_ownership('s_red_seal', { extra_cost = 1 })
+SMODS.Seal:take_ownership('s_blue_seal', { extra_cost = 1 })
+SMODS.Seal:take_ownership('s_gold_seal', { extra_cost = 1 })
+SMODS.Seal:take_ownership('s_purple_seal', { extra_cost = 1 })
+
+function add_playing_card_enhancement_cost(card)
+    if card.ability and card.ability.set == 'Enhanced' then
+        for k, v in pairs(G.P_CENTER_POOLS.Enhanced) do
+            if card.ability.effect == v.effect then
+                if v.extra_cost then
+                    card.extra_cost = card.extra_cost + v.extra_cost
+                else
+                    card.extra_cost = 1
+                end
+            end
+        end
+    end
+end
+
+function add_playing_card_seal_cost(card)
+    if card.seal then
+        for k, v in pairs(G.P_CENTER_POOLS.Seal) do
+            if card.seal[v.key:sub(3)] then
+                if v.extra_cost then
+                    card.extra_cost = card.extra_cost + v.extra_cost
+                else
+                    card.extra_cost = 0
+                end
+            end
+        end
+    end
+end
+
 function create_shop_playing_cards_area()
     return ({n=G.UIT.R, config={align = "cl"}, nodes={
         {n=G.UIT.R, config={align = "cm", padding = 0.05, r = 0.1, colour = G.C.DYN_UI.MAIN}, nodes={

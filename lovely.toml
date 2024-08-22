@@ -14,6 +14,16 @@ payload = '''if (v.type == 'Base' or v.type == 'Enhanced') and G.GAME.used_vouch
     card:set_seal(SMODS.poll_seal({key = 'illusion', mod = 10}))
 end'''
 
+# Add extra cost for some enhancements and seals (for balance)
+[[patches]]
+[patches.pattern]
+target = 'card.lua'
+pattern = '''self.cost = math.max(1, math.floor((self.base_cost + self.extra_cost + 0.5)*(100-G.GAME.discount_percent)/100))'''
+position = 'before'
+match_indent = true
+payload = '''add_playing_card_enhancement_cost(self)
+add_playing_card_seal_cost(self)'''
+
 # Add playing card area to the shop
 [[patches]]
 [patches.pattern]
