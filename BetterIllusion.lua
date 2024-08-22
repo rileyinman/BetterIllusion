@@ -46,7 +46,7 @@ end
 function add_playing_card_seal_cost(card)
     if card.seal then
         for k, v in pairs(G.P_CENTER_POOLS.Seal) do
-            if card.seal[v.key:sub(3)] then
+            if card.seal == v.key then
                 if v.extra_cost then
                     card.extra_cost = card.extra_cost + v.extra_cost
                 else
