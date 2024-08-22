@@ -3,6 +3,7 @@ version = "1.0.0"
 dump_lua = true
 priority = 10
 
+# Make Illusion generate seals on cards (vanilla behavior, mixed into jokers & consumables)
 [[patches]]
 [patches.pattern]
 target = 'functions/UI_definitions.lua'
@@ -12,3 +13,79 @@ match_indent = true
 payload = '''if (v.type == 'Base' or v.type == 'Enhanced') and G.GAME.used_vouchers["v_illusion"] and pseudorandom(pseudoseed('illusion')) > 0.8 then
     card:set_seal(SMODS.poll_seal({key = 'illusion', mod = 10}))
 end'''
+
+# Add playing card area to the shop
+[[patches]]
+[patches.pattern]
+target = 'functions/UI_definitions.lua'
+pattern = '''G.shop_vouchers = CardArea('''
+position = 'before'
+match_indent = true
+payload = '''G.shop_playing_cards = populate_shop_playing_cards()'''
+
+[[patches]]
+[patches.pattern]
+target = 'functions/UI_definitions.lua'
+pattern = '''}, false)'''
+position = 'before'
+match_indent = true
+payload = '''create_shop_playing_cards_area()'''
+
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+pattern = '''if G.load_shop_booster then'''
+position = 'before'
+match_indent = true
+payload = '''load_shop_playing_cards()'''
+
+# Patch Joker area to work with extra card(s) (credit: eremel_)
+[[patches]]
+[patches.pattern]
+target = 'functions/UI_definitions.lua'
+pattern = '''G.GAME.shop.joker_max*1.02*G.CARD_W,'''
+position = 'at'
+match_indent = true
+payload = '''math.min(G.GAME.shop.joker_max*1.02*G.CARD_W,2.55*G.CARD_W),'''
+
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+pattern = '''G.shop_jokers.T.w = G.GAME.shop.joker_max*1.01*G.CARD_W'''
+position = 'at'
+match_indent = true
+payload = '''G.shop_jokers.T.w = math.min(G.GAME.shop.joker_max*1.02*G.CARD_W,2.55*G.CARD_W)'''
+
+# Make reroll button work with playing card area
+[[patches]]
+[patches.pattern]
+target = 'functions/button_callbacks.lua'
+pattern = '''calculate_reroll_cost(final_free)'''
+position = 'after'
+match_indent = true
+payload = '''remove_shop_playing_cards()'''
+
+[[patches]]
+[patches.pattern]
+target = 'functions/button_callbacks.lua'
+pattern = '''for i = 1, G.GAME.shop.joker_max - #G.shop_jokers.cards do'''
+position = 'before'
+match_indent = true
+payload = '''load_shop_playing_cards(true)'''
+
+# Keep focus on whatever area is selected during reroll
+[[patches]]
+[patches.pattern]
+target = 'functions/button_callbacks.lua'
+pattern = '''if G.CONTROLLER:save_cardarea_focus('shop_jokers') then G.CONTROLLER.interrupt.focus = true end'''
+position = 'after'
+match_indent = true
+payload = '''if G.CONTROLLER:save_cardarea_focus('shop_playing_cards') then G.CONTROLLER.interrupt.focus = true end'''
+
+[[patches]]
+[patches.pattern]
+target = 'functions/button_callbacks.lua'
+pattern = '''G.CONTROLLER:recall_cardarea_focus('shop_jokers')'''
+position = 'at'
+match_indent = true
+payload = '''G.CONTROLLER:recall_cardarea_focus()'''
