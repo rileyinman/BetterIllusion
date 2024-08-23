@@ -31,7 +31,7 @@ target = 'functions/UI_definitions.lua'
 pattern = '''G.shop_vouchers = CardArea('''
 position = 'before'
 match_indent = true
-payload = '''G.shop_playing_cards = populate_shop_playing_cards()'''
+payload = '''G.shop_playing_cards = create_shop_playing_cards_area()'''
 
 [[patches]]
 [patches.pattern]
@@ -39,7 +39,7 @@ target = 'functions/UI_definitions.lua'
 pattern = '''}, false)'''
 position = 'before'
 match_indent = true
-payload = '''create_shop_playing_cards_area()'''
+payload = '''create_shop_playing_cards_container()'''
 
 [[patches]]
 [patches.pattern]

@@ -57,7 +57,7 @@ function add_playing_card_seal_cost(card)
     end
 end
 
-function create_shop_playing_cards_area()
+function create_shop_playing_cards_container()
     return ({n=G.UIT.R, config={align = "cl"}, nodes={
         {n=G.UIT.R, config={align = "cm", padding = 0.05, r = 0.1, colour = G.C.DYN_UI.MAIN}, nodes={
             {n=G.UIT.R, config={align = "cm", padding = 0.05, r = 0.1, colour = G.C.BLACK}, nodes={
@@ -71,13 +71,10 @@ function create_shop_playing_cards_area()
     }})
 end
 
-function populate_shop_playing_cards()
+function create_shop_playing_cards_area()
     return CardArea(
-        G.hand.T.x,
-        G.hand.T.y+G.ROOM.T.y,
-        math.min(better_illusion.config.playing_card_max*1.02*G.CARD_W,1.90*G.CARD_W),
-        1.05*G.CARD_H,
-        {card_limit = better_illusion.config.playing_card_max, type = 'shop', highlight_limit = 1}
+        G.ROOM.T.x, G.ROOM.T.y, G.CARD_W, G.CARD_H,
+        {card_limit = 1, type = 'shop', highlight_limit = 1}
     )
 end
 
@@ -91,7 +88,7 @@ function load_shop_playing_cards(refresh)
         end
         G.load_shop_playing_cards = nil
     else
-        for i=1, better_illusion.config.playing_card_max - #G.shop_playing_cards.cards do
+        for i=1, 1 - #G.shop_playing_cards.cards do
             local new_shop_card = create_playing_card_for_shop(G.shop_playing_cards)
             G.shop_playing_cards:emplace(new_shop_card)
             if refresh then new_shop_card:juice_up() end
