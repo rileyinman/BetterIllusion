@@ -24,14 +24,14 @@ match_indent = true
 payload = '''add_playing_card_enhancement_cost(self)
 add_playing_card_seal_cost(self)'''
 
-# Load playing cards after buying Magic Trick
+# Load playing card after buying Magic Trick
 [[patches]]
 [patches.pattern]
 target = 'card.lua'
 pattern = '''G.GAME.playing_card_rate = center_table.extra'''
 position = 'after'
 match_indent = true
-payload = '''load_shop_playing_cards()'''
+payload = '''load_shop_playing_card()'''
 
 # Add playing card area to the shop
 [[patches]]
@@ -40,7 +40,7 @@ target = 'functions/UI_definitions.lua'
 pattern = '''G.shop_vouchers = CardArea('''
 position = 'before'
 match_indent = true
-payload = '''G.shop_playing_cards = create_shop_playing_cards_area()'''
+payload = '''G.shop_playing_card = create_shop_playing_card_area()'''
 
 [[patches]]
 [patches.pattern]
@@ -48,7 +48,7 @@ target = 'functions/UI_definitions.lua'
 pattern = '''}, false)'''
 position = 'before'
 match_indent = true
-payload = '''create_shop_playing_cards_container()'''
+payload = '''create_shop_playing_card_container()'''
 
 [[patches]]
 [patches.pattern]
@@ -56,7 +56,7 @@ target = 'game.lua'
 pattern = '''if G.load_shop_booster then'''
 position = 'before'
 match_indent = true
-payload = '''load_shop_playing_cards()'''
+payload = '''load_shop_playing_card()'''
 
 # Patch Joker area to work with extra card(s) (credit: eremel_)
 [[patches]]
@@ -82,7 +82,7 @@ target = 'functions/button_callbacks.lua'
 pattern = '''calculate_reroll_cost(final_free)'''
 position = 'after'
 match_indent = true
-payload = '''remove_shop_playing_cards()'''
+payload = '''remove_shop_playing_card()'''
 
 [[patches]]
 [patches.pattern]
@@ -90,7 +90,7 @@ target = 'functions/button_callbacks.lua'
 pattern = '''for i = 1, G.GAME.shop.joker_max - #G.shop_jokers.cards do'''
 position = 'before'
 match_indent = true
-payload = '''load_shop_playing_cards(true)'''
+payload = '''load_shop_playing_card(true)'''
 
 # Keep focus on whatever area is selected during reroll
 [[patches]]
@@ -99,7 +99,7 @@ target = 'functions/button_callbacks.lua'
 pattern = '''if G.CONTROLLER:save_cardarea_focus('shop_jokers') then G.CONTROLLER.interrupt.focus = true end'''
 position = 'after'
 match_indent = true
-payload = '''if G.CONTROLLER:save_cardarea_focus('shop_playing_cards') then G.CONTROLLER.interrupt.focus = true end'''
+payload = '''if G.CONTROLLER:save_cardarea_focus('shop_playing_card') then G.CONTROLLER.interrupt.focus = true end'''
 
 [[patches]]
 [patches.pattern]

@@ -57,13 +57,13 @@ function add_playing_card_seal_cost(card)
     end
 end
 
-function create_shop_playing_cards_container()
+function create_shop_playing_card_container()
     return ({n=G.UIT.R, config={align = "cl"}, nodes={
         {n=G.UIT.R, config={align = "cm", padding = 0.05, r = 0.1, colour = G.C.DYN_UI.MAIN}, nodes={
             {n=G.UIT.R, config={align = "cm", padding = 0.05, r = 0.1, colour = G.C.BLACK}, nodes={
                 {n=G.UIT.C, config={align = "cm", padding = 0.2, r=0.2, colour = G.C.L_BLACK, minw = 2.2}, nodes={
                     {n=G.UIT.R, nodes={
-                        {n=G.UIT.O, config={align = "cl", object = G.shop_playing_cards}}
+                        {n=G.UIT.O, config={align = "cl", object = G.shop_playing_card}}
                     }}
                 }}
             }}
@@ -71,7 +71,7 @@ function create_shop_playing_cards_container()
     }})
 end
 
-function create_shop_playing_cards_area()
+function create_shop_playing_card_area()
     --if not G.GAME.used_vouchers["v_magic_trick"] then return nil end
 
     return CardArea(
@@ -80,23 +80,20 @@ function create_shop_playing_cards_area()
     )
 end
 
-function load_shop_playing_cards(refresh)
+function load_shop_playing_card(refresh)
     if not G.GAME.used_vouchers["v_magic_trick"] then return end
 
-    if G.load_shop_playing_cards then
+    if G.load_shop_playing_card then
         nosave_shop = true
-        G.shop_playing_cards:load(G.load_shop_playing_cards)
-        for k, v in ipairs(G.shop_playing_cards.cards) do
-            create_shop_card_ui(v)
-            v:start_materialize()
-        end
-        G.load_shop_playing_cards = nil
+        G.shop_playing_card:load(G.load_shop_playing_card)
+        playing_card = G.shop_playing_card.cards[1]
+        create_shop_card_ui(playing_card)
+        playing_card:start_materialize()
+        G.load_shop_playing_card = nil
     else
-        for i=1, 1 - #G.shop_playing_cards.cards do
-            local new_shop_card = create_playing_card_for_shop(G.shop_playing_cards)
-            G.shop_playing_cards:emplace(new_shop_card)
-            if refresh then new_shop_card:juice_up() end
-        end
+        local new_shop_card = create_playing_card_for_shop(G.shop_playing_card)
+        G.shop_playing_card:emplace(new_shop_card)
+        if refresh then new_shop_card:juice_up() end
     end
 end
 
@@ -109,12 +106,10 @@ function create_playing_card_for_shop(area)
     return playing_card
 end
 
-function remove_shop_playing_cards()
-    for i = #G.shop_playing_cards.cards,1, -1 do
-        local c = G.shop_playing_cards:remove_card(G.shop_playing_cards.cards[i])
-        c:remove()
-        c = nil
-    end
+function remove_shop_playing_card()
+    local playing_card = G.shop_playing_card:remove_card(G.shop_playing_card.cards[1])
+    playing_card:remove()
+    playing_card = nil
 end
 
 ----------------------------------------------
