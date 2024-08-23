@@ -24,23 +24,29 @@ match_indent = true
 payload = '''add_playing_card_enhancement_cost(self)
 add_playing_card_seal_cost(self)'''
 
-# Load playing card after redeeming Magic Trick
+# Load playing card after redeeming magic trick
+[[patches]]
+[patches.pattern]
+target = 'card.lua'
+pattern = '''if center_table.name == 'Magic Trick' or center_table.name == 'Illusion' then'''
+position = 'before'
+match_indent = true
+payload = '''if center_table.name == 'Magic Trick' then
+    G.E_MANAGER:add_event(Event({func = function()
+        load_shop_playing_card()
+        return true end }))
+end'''
+
+# Preserve vanilla Magic Trick / Illusion behavior only if rework is disabled
 [[patches]]
 [patches.pattern]
 target = 'card.lua'
 pattern = '''G.GAME.playing_card_rate = center_table.extra'''
 position = 'at'
 match_indent = true
-payload = '''load_shop_playing_card()'''
-
-# Remove event hook after redeeming Illusion
-[[patches]]
-[patches.pattern]
-target = 'card.lua'
-pattern = '''if center_table.name == 'Magic Trick' or center_table.name == 'Illusion' then'''
-position = 'at'
-match_indent = true
-payload = '''if center_table.name == 'Magic Trick' then'''
+payload = '''if not better_illusion.config.rework then
+    G.GAME.playing_card_rate = center_table.extra
+end'''
 
 # Add playing card area to the shop
 [[patches]]
