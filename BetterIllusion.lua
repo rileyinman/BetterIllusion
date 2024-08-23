@@ -106,9 +106,11 @@ function load_shop_playing_card(refresh)
     if G.load_shop_playing_card then
         nosave_shop = true
         G.shop_playing_card:load(G.load_shop_playing_card)
-        playing_card = G.shop_playing_card.cards[1]
+
+        local playing_card = G.shop_playing_card.cards[1]
         create_shop_card_ui(playing_card)
         playing_card:start_materialize()
+
         G.load_shop_playing_card = nil
     else
         local new_shop_card = create_playing_card_for_shop(G.shop_playing_card)
