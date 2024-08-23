@@ -24,14 +24,23 @@ match_indent = true
 payload = '''add_playing_card_enhancement_cost(self)
 add_playing_card_seal_cost(self)'''
 
-# Load playing card after buying Magic Trick
+# Load playing card after redeeming Magic Trick
 [[patches]]
 [patches.pattern]
 target = 'card.lua'
 pattern = '''G.GAME.playing_card_rate = center_table.extra'''
-position = 'after'
+position = 'at'
 match_indent = true
 payload = '''load_shop_playing_card()'''
+
+# Remove event hook after redeeming Illusion
+[[patches]]
+[patches.pattern]
+target = 'card.lua'
+pattern = '''if center_table.name == 'Magic Trick' or center_table.name == 'Illusion' then'''
+position = 'at'
+match_indent = true
+payload = '''if center_table.name == 'Magic Trick' then'''
 
 # Add playing card area to the shop
 [[patches]]
