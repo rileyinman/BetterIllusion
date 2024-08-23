@@ -58,7 +58,7 @@ function add_playing_card_seal_cost(card)
 end
 
 function create_shop_playing_cards_container()
-    if not G.GAME.used_vouchers["v_magic_trick"] then return {n=G.UIT.R} end
+    --if not G.GAME.used_vouchers["v_magic_trick"] then return {n=G.UIT.R} end
 
     return ({n=G.UIT.R, config={align = "cl"}, nodes={
         {n=G.UIT.R, config={align = "cm", padding = 0.05, r = 0.1, colour = G.C.DYN_UI.MAIN}, nodes={
@@ -74,7 +74,7 @@ function create_shop_playing_cards_container()
 end
 
 function create_shop_playing_cards_area()
-    if not G.GAME.used_vouchers["v_magic_trick"] then return nil end
+    --if not G.GAME.used_vouchers["v_magic_trick"] then return nil end
 
     return CardArea(
         G.ROOM.T.x, G.ROOM.T.y, G.CARD_W, G.CARD_H,
