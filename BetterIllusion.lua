@@ -58,10 +58,12 @@ function add_playing_card_seal_cost(card)
 end
 
 function create_shop_playing_cards_container()
+    if not G.GAME.used_vouchers["v_magic_trick"] then return {n=G.UIT.R} end
+
     return ({n=G.UIT.R, config={align = "cl"}, nodes={
         {n=G.UIT.R, config={align = "cm", padding = 0.05, r = 0.1, colour = G.C.DYN_UI.MAIN}, nodes={
             {n=G.UIT.R, config={align = "cm", padding = 0.05, r = 0.1, colour = G.C.BLACK}, nodes={
-                {n=G.UIT.C, config={align = "cm", padding = 0.2, r=0.2, colour = G.C.L_BLACK, minw = 4.2}, nodes={
+                {n=G.UIT.C, config={align = "cm", padding = 0.2, r=0.2, colour = G.C.L_BLACK, minw = 2.2}, nodes={
                     {n=G.UIT.R, nodes={
                         {n=G.UIT.O, config={align = "cl", object = G.shop_playing_cards}}
                     }}
@@ -72,6 +74,8 @@ function create_shop_playing_cards_container()
 end
 
 function create_shop_playing_cards_area()
+    if not G.GAME.used_vouchers["v_magic_trick"] then return nil end
+
     return CardArea(
         G.ROOM.T.x, G.ROOM.T.y, G.CARD_W, G.CARD_H,
         {card_limit = 1, type = 'shop', highlight_limit = 1}
@@ -79,6 +83,8 @@ function create_shop_playing_cards_area()
 end
 
 function load_shop_playing_cards(refresh)
+    if G.shop_playing_cards == nil then return end
+
     if G.load_shop_playing_cards then
         nosave_shop = true
         G.shop_playing_cards:load(G.load_shop_playing_cards)
@@ -97,6 +103,8 @@ function load_shop_playing_cards(refresh)
 end
 
 function create_playing_card_for_shop(area)
+    if area == nil then return end
+
     local type = (G.GAME.used_vouchers["v_illusion"] and pseudorandom(pseudoseed('illusion')) > 0.6) and 'Enhanced' or 'Base'
     local playing_card = create_card(type, area, nil, nil, nil, nil, nil, 'sho')
     create_shop_card_ui(playing_card, type, area)
