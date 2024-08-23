@@ -110,7 +110,7 @@ function create_shop_playing_card_container()
 end
 
 function create_shop_playing_card_shelf()
-    if not better_illusion.config.rework or not better_illusion.config.playing_card_shelf then return {n=G.UIT.R} end
+    if not better_illusion.config.rework or not better_illusion.config.playing_card_shelf or not G.GAME.used_vouchers['v_magic_trick'] then return {n=G.UIT.R} end
 
     return ({n=G.UIT.R, config={align = 'cl'}, nodes={
         {n=G.UIT.R, config={align = 'cm', padding = 0.05, r = 0.1, colour = G.C.DYN_UI.MAIN}, nodes={
