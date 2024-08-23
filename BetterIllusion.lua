@@ -50,7 +50,7 @@ function add_playing_card_seal_cost(card)
                 if v.extra_cost then
                     card.extra_cost = card.extra_cost + v.extra_cost
                 else
-                    card.extra_cost = 0
+                    card.extra_cost = 1
                 end
             end
         end
