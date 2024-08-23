@@ -24,6 +24,15 @@ match_indent = true
 payload = '''add_playing_card_enhancement_cost(self)
 add_playing_card_seal_cost(self)'''
 
+# Reload shop after buying Magic Trick (broken)
+[[patches]]
+[patches.pattern]
+target = 'card.lua'
+pattern = '''G.GAME.playing_card_rate = center_table.extra'''
+position = 'after'
+match_indent = true
+payload = '''G.shop:recalculate()'''
+
 # Add playing card area to the shop
 [[patches]]
 [patches.pattern]
