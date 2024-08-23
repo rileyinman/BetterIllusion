@@ -73,6 +73,15 @@ position = 'before'
 match_indent = true
 payload = '''load_shop_playing_card()'''
 
+# Let playing cards be purchased when using a controller
+[[patches]]
+[patches.pattern]
+target = 'functions/UI_definitions.lua'
+pattern = '''if card.area == G.shop_jokers and G.shop_jokers then --Add a buy button'''
+position = 'at'
+match_indent = true
+payload = '''if (card.area == G.shop_jokers and G.shop_jokers) or (card.area == G.shop_playing_card and G.shop_playing_card) then --Add a buy button'''
+
 # Patch Joker area to work with extra card(s) (credit: eremel_)
 [[patches]]
 [patches.pattern]
