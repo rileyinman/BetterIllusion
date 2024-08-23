@@ -24,10 +24,10 @@ SMODS.Enhancement:take_ownership('m_gold', { extra_cost = 2 })
 SMODS.Enhancement:take_ownership('m_lucky', { extra_cost = 2 })
 
 --- Add extra_cost values to seals
-SMODS.Seal:take_ownership('s_red_seal', { extra_cost = 1 })
-SMODS.Seal:take_ownership('s_blue_seal', { extra_cost = 1 })
-SMODS.Seal:take_ownership('s_gold_seal', { extra_cost = 1 })
-SMODS.Seal:take_ownership('s_purple_seal', { extra_cost = 1 })
+SMODS.Seal:take_ownership('Red', { extra_cost = 1 })
+SMODS.Seal:take_ownership('Blue', { extra_cost = 1 })
+SMODS.Seal:take_ownership('Gold', { extra_cost = 1 })
+SMODS.Seal:take_ownership('Purple', { extra_cost = 1 })
 
 function add_playing_card_enhancement_cost(card)
     if card.ability and card.ability.set == 'Enhanced' then
