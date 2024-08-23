@@ -105,7 +105,7 @@ end
 function create_playing_card_for_shop(area)
     if area == nil then return end
 
-    local type = (G.GAME.used_vouchers["v_illusion"] and pseudorandom(pseudoseed('illusion')) > 0.6) and 'Enhanced' or 'Base'
+    local type = (G.GAME.used_vouchers["v_illusion"] or pseudorandom(pseudoseed('magic_trick')) > 0.6) and 'Enhanced' or 'Base'
     local playing_card = create_card(type, area, nil, nil, nil, nil, nil, 'sho')
     create_shop_card_ui(playing_card, type, area)
     ---playing_card:set_seal(SMODS.poll_seal({key = 'illusion', mod = 10}))
