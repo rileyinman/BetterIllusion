@@ -63,7 +63,18 @@ target = 'functions/UI_definitions.lua'
 pattern = '''}, false)'''
 position = 'before'
 match_indent = true
-payload = '''create_shop_playing_card_container()'''
+payload = '''create_shop_playing_card_shelf()'''
+
+[[patches]]
+[patches.regex]
+target = 'functions/UI_definitions.lua'
+pattern = '''\{n=G\.UIT\.C, config=\{align = "cm", padding = 0\.2, r=0\.2, colour = G\.C\.L_BLACK, emboss = 0\.05, minw = 8\.2\}, nodes=\{\n\s*\{n=G\.UIT\.O, config=\{object = G\.shop_jokers\}\},\n\s*\}\},\n'''
+position = 'at'
+match_indent = true
+payload = '''{n=G.UIT.C, config={align = "cm", padding = 0.2, r=0.2, colour = G.C.L_BLACK, emboss = 0.05, minw = calc_shop_jokers_container_width()}, nodes={
+    {n=G.UIT.O, config={object = G.shop_jokers}},
+}},
+create_shop_playing_card_container()'''
 
 [[patches]]
 [patches.pattern]
@@ -82,14 +93,14 @@ position = 'at'
 match_indent = true
 payload = '''if (card.area == G.shop_jokers and G.shop_jokers) or (card.area == G.shop_playing_card and G.shop_playing_card) then --Add a buy button'''
 
-# Patch Joker area to work with extra card(s) (credit: eremel_)
+# Patch Joker area to work with extra card(s) (credit: Eremel)
 [[patches]]
 [patches.pattern]
 target = 'functions/UI_definitions.lua'
 pattern = '''G.GAME.shop.joker_max*1.02*G.CARD_W,'''
 position = 'at'
 match_indent = true
-payload = '''math.min(G.GAME.shop.joker_max*1.02*G.CARD_W,2.55*G.CARD_W),'''
+payload = '''calc_shop_jokers_width(),'''
 
 [[patches]]
 [patches.pattern]
@@ -97,7 +108,7 @@ target = 'functions/common_events.lua'
 pattern = '''G.shop_jokers.T.w = G.GAME.shop.joker_max*1.01*G.CARD_W'''
 position = 'at'
 match_indent = true
-payload = '''G.shop_jokers.T.w = math.min(G.GAME.shop.joker_max*1.02*G.CARD_W,2.55*G.CARD_W)'''
+payload = '''G.shop_jokers.T.w = calc_shop_jokers_width()'''
 
 # Make reroll button work with playing card area
 [[patches]]

@@ -11,16 +11,23 @@
 
 better_illusion = SMODS.current_mod
 
-sendDebugMessage("Better Illusion Voucher patch activated!")
+sendDebugMessage('Better Illusion Voucher patch activated!')
 
 better_illusion.config_tab = function()
-    return {n=G.UIT.ROOT, config={r = 0.1, minw = 8, align = "tm", padding = 0.2, colour = G.C.BLACK}, nodes={
+    return {n=G.UIT.ROOT, config={r = 0.1, minw = 8, align = 'tm', padding = 0.2, colour = G.C.BLACK}, nodes={
         {n=G.UIT.R, config={padding = 0.2}, nodes={
-            {n=G.UIT.R, config={align = "cm"}, nodes={
+            {n=G.UIT.R, config={align = 'cm'}, nodes={
                 create_toggle({
                     label = localize('better_illusion_rework'),
                     ref_table = better_illusion.config,
                     ref_value = 'rework'
+                })
+            }},
+            {n=G.UIT.R, config={align = 'cm'}, nodes={
+                create_toggle({
+                    label = localize('better_illusion_shelf'),
+                    ref_table = better_illusion.config,
+                    ref_value = 'playing_card_shelf'
                 })
             }}
         }}
@@ -75,15 +82,42 @@ function add_playing_card_seal_cost(card)
     end
 end
 
-function create_shop_playing_card_container()
-    if not better_illusion.config.rework then return {n=G.UIT.R} end
+function calc_shop_jokers_container_width()
+    if not better_illusion.config.rework or not G.GAME.used_vouchers['v_magic_trick'] then
+        return 8.2
+    else
+        return 5.8
+    end
+end
 
-    return ({n=G.UIT.R, config={align = "cl"}, nodes={
-        {n=G.UIT.R, config={align = "cm", padding = 0.05, r = 0.1, colour = G.C.DYN_UI.MAIN}, nodes={
-            {n=G.UIT.R, config={align = "cm", padding = 0.05, r = 0.1, colour = G.C.BLACK}, nodes={
-                {n=G.UIT.C, config={align = "cm", padding = 0.2, r=0.2, colour = G.C.L_BLACK, minw = 2.2}, nodes={
+-- Credit: Eremel
+function calc_shop_jokers_width()
+    if not better_illusion.config.rework or better_illusion.config.playing_card_shelf or not G.GAME.used_vouchers['v_magic_trick'] then
+        return G.GAME.shop.joker_max*1.02*G.CARD_W
+    end
+
+    return math.min(G.GAME.shop.joker_max*1.02*G.CARD_W,2.55*G.CARD_W)
+end
+
+function create_shop_playing_card_container()
+    if not better_illusion.config.rework or better_illusion.config.playing_card_shelf or not G.GAME.used_vouchers['v_magic_trick'] then return {n=G.UIT.R} end
+
+    return ({n=G.UIT.C, config={align = 'cm', padding = 0.2, r = 0.1, colour = G.C.BLACK, minw = 2.2}, nodes={
+        {n=G.UIT.R, nodes={
+            {n=G.UIT.O, config={align = 'cl', object = G.shop_playing_card}}
+        }}
+    }})
+end
+
+function create_shop_playing_card_shelf()
+    if not better_illusion.config.rework or not better_illusion.config.playing_card_shelf then return {n=G.UIT.R} end
+
+    return ({n=G.UIT.R, config={align = 'cl'}, nodes={
+        {n=G.UIT.R, config={align = 'cm', padding = 0.05, r = 0.1, colour = G.C.DYN_UI.MAIN}, nodes={
+            {n=G.UIT.R, config={align = 'cm', padding = 0.05, r = 0.1, colour = G.C.BLACK}, nodes={
+                {n=G.UIT.C, config={align = 'cm', padding = 0.2, r = 0.2, colour = G.C.L_BLACK, minw = 2.2}, nodes={
                     {n=G.UIT.R, nodes={
-                        {n=G.UIT.O, config={align = "cl", object = G.shop_playing_card}}
+                        {n=G.UIT.O, config={align = 'cl', object = G.shop_playing_card}}
                     }}
                 }}
             }}
@@ -101,7 +135,7 @@ function create_shop_playing_card_area()
 end
 
 function load_shop_playing_card(refresh)
-    if not better_illusion.config.rework or not G.GAME.used_vouchers["v_magic_trick"] then return end
+    if not better_illusion.config.rework or not G.GAME.used_vouchers['v_magic_trick'] then return end
 
     if G.load_shop_playing_card then
         nosave_shop = true
@@ -122,11 +156,11 @@ end
 function create_playing_card_for_shop(area)
     if not better_illusion.config.rework then return end
 
-    local type = (G.GAME.used_vouchers["v_illusion"] or pseudorandom(pseudoseed('magic_trick')) > 0.6) and 'Enhanced' or 'Base'
+    local type = (G.GAME.used_vouchers['v_illusion'] or pseudorandom(pseudoseed('magic_trick')) > 0.6) and 'Enhanced' or 'Base'
     local playing_card = create_card(type, area, nil, nil, nil, nil, nil, 'sho')
     create_shop_card_ui(playing_card, type, area)
 
-    if G.GAME.used_vouchers["v_illusion"] then
+    if G.GAME.used_vouchers['v_illusion'] then
         playing_card:set_seal(SMODS.poll_seal({key = 'illusion', mod = 10}))
         playing_card:set_edition(poll_edition('illusion', 10, true))
     end
