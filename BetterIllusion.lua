@@ -83,7 +83,7 @@ function add_playing_card_seal_cost(card)
 end
 
 function calc_shop_jokers_container_width()
-    if not better_illusion.config.rework or not G.GAME.used_vouchers['v_magic_trick'] then
+    if not better_illusion.config.rework or better_illusion.config.playing_card_shelf or not G.GAME.used_vouchers['v_magic_trick'] then
         return 8.2
     else
         return 5.8
