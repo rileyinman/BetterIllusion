@@ -50,6 +50,29 @@ SMODS.Seal:take_ownership('Blue', { extra_cost = 1 })
 SMODS.Seal:take_ownership('Gold', { extra_cost = 1 })
 SMODS.Seal:take_ownership('Purple', { extra_cost = 1 })
 
+--- Add text to voucher descriptions if mod enabled
+SMODS.Voucher:take_ownership('v_magic_trick', {
+    generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+        local desc_key = self.key
+        if better_illusion.config.rework then
+            desc_key = 'v_better_illusion_'..self.key:sub('3')
+        end
+
+        localize({type = 'descriptions', key = desc_key, set = self.set, nodes = desc_nodes, vars = {}})
+    end
+})
+
+SMODS.Voucher:take_ownership('v_illusion', {
+    generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+        local desc_key = self.key
+        if better_illusion.config.rework then
+            desc_key = 'v_better_illusion_'..self.key:sub('3')
+        end
+
+        localize({type = 'descriptions', key = desc_key, set = self.set, nodes = desc_nodes, vars = {}})
+    end
+})
+
 function add_playing_card_enhancement_cost(card)
     if not better_illusion.config.rework then return end
 
