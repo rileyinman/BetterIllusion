@@ -169,7 +169,7 @@ function create_playing_card_for_shop(area)
 end
 
 function remove_shop_playing_card()
-    if not better_illusion.config.rework then return end
+    if not better_illusion.config.rework or not G.GAME.used_vouchers['v_magic_trick'] then return end
 
     local playing_card = G.shop_playing_card:remove_card(G.shop_playing_card.cards[1])
     playing_card:remove()
