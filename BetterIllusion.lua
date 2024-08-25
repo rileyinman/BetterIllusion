@@ -35,20 +35,20 @@ better_illusion.config_tab = function()
 end
 
 --- Add extra_cost values to enhancements
-SMODS.Enhancement:take_ownership('m_bonus', { extra_cost = 0 })
-SMODS.Enhancement:take_ownership('m_mult', { extra_cost = 0 })
-SMODS.Enhancement:take_ownership('m_wild', { extra_cost = 0 })
-SMODS.Enhancement:take_ownership('m_stone', { extra_cost = 0 })
-SMODS.Enhancement:take_ownership('m_glass', { extra_cost = 2 })
-SMODS.Enhancement:take_ownership('m_steel', { extra_cost = 2 })
-SMODS.Enhancement:take_ownership('m_gold', { extra_cost = 2 })
-SMODS.Enhancement:take_ownership('m_lucky', { extra_cost = 2 })
+SMODS.Enhancement:take_ownership('m_bonus', { extra_cost = 0 }, true)
+SMODS.Enhancement:take_ownership('m_mult', { extra_cost = 0 }, true)
+SMODS.Enhancement:take_ownership('m_wild', { extra_cost = 0 }, true)
+SMODS.Enhancement:take_ownership('m_stone', { extra_cost = 0 }, true)
+SMODS.Enhancement:take_ownership('m_glass', { extra_cost = 2 }, true)
+SMODS.Enhancement:take_ownership('m_steel', { extra_cost = 2 }, true)
+SMODS.Enhancement:take_ownership('m_gold', { extra_cost = 2 }, true)
+SMODS.Enhancement:take_ownership('m_lucky', { extra_cost = 2 }, true)
 
 --- Add extra_cost values to seals
-SMODS.Seal:take_ownership('Red', { extra_cost = 1 })
-SMODS.Seal:take_ownership('Blue', { extra_cost = 1 })
-SMODS.Seal:take_ownership('Gold', { extra_cost = 1 })
-SMODS.Seal:take_ownership('Purple', { extra_cost = 1 })
+SMODS.Seal:take_ownership('Red', { extra_cost = 1 }, true)
+SMODS.Seal:take_ownership('Blue', { extra_cost = 1 }, true)
+SMODS.Seal:take_ownership('Gold', { extra_cost = 1 }, true)
+SMODS.Seal:take_ownership('Purple', { extra_cost = 1 }, true)
 
 --- Add text to voucher descriptions if mod enabled
 SMODS.Voucher:take_ownership('v_magic_trick', {
