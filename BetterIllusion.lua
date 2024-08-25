@@ -165,8 +165,10 @@ function load_shop_playing_card(refresh)
         G.shop_playing_card:load(G.load_shop_playing_card)
 
         local playing_card = G.shop_playing_card.cards[1]
-        create_shop_card_ui(playing_card)
-        playing_card:start_materialize()
+        if playing_card then
+            create_shop_card_ui(playing_card)
+            playing_card:start_materialize()
+        end
 
         G.load_shop_playing_card = nil
     else
@@ -195,8 +197,11 @@ function remove_shop_playing_card()
     if not better_illusion.config.rework or not G.GAME.used_vouchers['v_magic_trick'] then return end
 
     local playing_card = G.shop_playing_card:remove_card(G.shop_playing_card.cards[1])
-    playing_card:remove()
-    playing_card = nil
+
+    if playing_card then
+        playing_card:remove()
+        playing_card = nil
+    end
 end
 
 ----------------------------------------------
