@@ -109,7 +109,7 @@ function calc_shop_jokers_container_width()
     if not better_illusion.config.rework or better_illusion.config.playing_card_shelf or not G.GAME.used_vouchers['v_magic_trick'] then
         return 8.2
     else
-        return 5.8
+        return 6
     end
 end
 
@@ -119,7 +119,7 @@ function calc_shop_jokers_width()
         return G.GAME.shop.joker_max*1.02*G.CARD_W
     end
 
-    return math.min(G.GAME.shop.joker_max*1.02*G.CARD_W,2.55*G.CARD_W)
+    return math.min(G.GAME.shop.joker_max*1.02*G.CARD_W,2.80*G.CARD_W)
 end
 
 function create_shop_playing_card_container()
