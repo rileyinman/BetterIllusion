@@ -8,6 +8,7 @@ return {
     descriptions = {
         Voucher = {
             v_better_illusion_magic_trick = {
+                name = "Magic Trick",
                 text = {
                     '{C:attention}Playing cards{} can be purchased',
                     'from a new area in the {C:attention}shop{},',
@@ -15,6 +16,7 @@ return {
                 }
             },
             v_better_illusion_illusion = {
+                name = "Illusion",
                 text = {
                     '{C:attention}Playing cards{} in shop always',
                     'have an {C:enhanced}Enhancement{}, may have',

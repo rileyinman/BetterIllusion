@@ -58,6 +58,8 @@ SMODS.Voucher:take_ownership('v_magic_trick', {
             desc_key = 'v_better_illusion_'..self.key:sub('3')
         end
 
+	full_UI_table.name = localize({type = 'name', key = desc_key, set = self.set, name_nodes = {}, vars = {}})
+
         localize({type = 'descriptions', key = desc_key, set = self.set, nodes = desc_nodes, vars = {}})
     end
 })
@@ -68,6 +70,8 @@ SMODS.Voucher:take_ownership('v_illusion', {
         if better_illusion.config.rework then
             desc_key = 'v_better_illusion_'..self.key:sub('3')
         end
+
+	full_UI_table.name = localize({type = 'name', key = desc_key, set = self.set, name_nodes = {}, vars = {}})
 
         localize({type = 'descriptions', key = desc_key, set = self.set, nodes = desc_nodes, vars = {}})
     end
