@@ -45,10 +45,10 @@ SMODS.Enhancement:take_ownership('m_gold', { extra_cost = 2 }, true)
 SMODS.Enhancement:take_ownership('m_lucky', { extra_cost = 2 }, true)
 
 --- Add extra_cost values to seals
-SMODS.Seal:take_ownership('Red', { extra_cost = 1 }, true)
-SMODS.Seal:take_ownership('Blue', { extra_cost = 1 }, true)
-SMODS.Seal:take_ownership('Gold', { extra_cost = 1 }, true)
-SMODS.Seal:take_ownership('Purple', { extra_cost = 1 }, true)
+--SMODS.Seal:take_ownership('Red', { extra_cost = 1 }, true)
+--SMODS.Seal:take_ownership('Blue', { extra_cost = 1 }, true)
+--SMODS.Seal:take_ownership('Gold', { extra_cost = 1 }, true)
+--SMODS.Seal:take_ownership('Purple', { extra_cost = 1 }, true)
 
 --- Add text to voucher descriptions if mod enabled
 SMODS.Voucher:take_ownership('v_magic_trick', {
@@ -162,7 +162,7 @@ function create_shop_playing_card_area()
 end
 
 function load_shop_playing_card(refresh)
-    if not better_illusion.config.rework or not G.GAME.used_vouchers['v_magic_trick'] then return end
+    if not better_illusion.config.rework or not G.GAME.used_vouchers['v_magic_trick'] or not G.shop then return end
 
     if G.load_shop_playing_card then
         nosave_shop = true
